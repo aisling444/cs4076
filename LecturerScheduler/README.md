@@ -3,7 +3,7 @@ Authors: Aisling Walsh 24416762 Luigi Curotto 24423882
 
 How To Use:
 1. Run Server.java
-2. Wait until you see "Waiting for client to connect..."
+2. Wait until you see "Opening port..."
 3. Run App.java
 
 How To Use:
