@@ -20,7 +20,7 @@ Features:
 4. Display full schedule
 5. Handles invalid actions with IncorrectActionException
 
-##Screenshots
-![Client UI] (Screenshots/client-ui.png)
-![Scheduling Lecture] (Screenshots/Schedule.png)
-![Removing Lecture] (Screenshots/Remove.png)
+## Screenshots
+![Client UI](Screenshots/client-ui.png)
+![Scheduling Lecture](Screenshots/Schedule.png)
+![Removing Lecture](Screenshots/Remove.png)
