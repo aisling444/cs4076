@@ -7,7 +7,7 @@ How To Use:
 3. Run App.java
 
 How To Use:
-1. Choose an action: ADD, REMOVE, DISPLAY
+1. Choose an action: ADD, REMOVE, DISPLAY, OTHER
 2. Fill in required feilds
 3. Click send request
 4. Click STOP to end the session
