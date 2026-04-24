@@ -13,7 +13,7 @@ public class Schedule {
 
     private final String courseCode;
     private final Map<String, Lecture> timeSlots = new HashMap<>();
-    private final Map<String, String>  roomSlots = new HashMap<>();
+    private final Map<String, String> roomSlots = new HashMap<>();
 
     public Schedule(String courseCode) {
         this.courseCode = courseCode;
@@ -21,9 +21,7 @@ public class Schedule {
 
     public synchronized String checkClash(LocalDate date, String time, String room) {
         if (timeSlots.containsKey(date + "|" + time)) {
-            return courseCode + " already has '"
-                    + timeSlots.get(date + "|" + time).getModule()
-                    + "' scheduled at " + date + " " + time + ".";
+            return courseCode + " already has '" + timeSlots.get(date + "|" + time).getModule() + "' scheduled at " + date + " " + time + ".";
         }
         if (roomSlots.containsKey(date + "|" + time + "|" + room)) {
             return "Room " + room + " is already booked at " + date + " " + time + ".";
