@@ -25,8 +25,7 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("[Client " + clientId + "] Connected from "
-                + clientSocket.getRemoteSocketAddress());
+        System.out.println("[Client " + clientId + "] Connected from " + clientSocket.getRemoteSocketAddress());
         try (
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter out   = new PrintWriter(clientSocket.getOutputStream(), true)
@@ -52,13 +51,12 @@ public class ClientHandler implements Runnable {
         String action = parts[0].trim().toUpperCase();
         try {
             return switch (action) {
-                case "STOP"    -> "TERMINATE|Server confirms termination.";
-                case "ADD"     -> handleAdd(parts);
-                case "REMOVE"  -> handleRemove(parts);
+                case "STOP" -> "TERMINATE|Server confirms termination.";
+                case "ADD" -> handleAdd(parts);
+                case "REMOVE" -> handleRemove(parts);
                 case "DISPLAY" -> handleDisplay();
-                case "EARLY"   -> handleEarlyLectures();
-                default -> throw new IncorrectActionException(
-                        "Unknown action '" + parts[0] + "'. Valid: ADD, REMOVE, DISPLAY, EARLY, STOP.");
+                case "EARLY" -> handleEarlyLectures();
+                default -> throw new IncorrectActionException("Unknown action '" + parts[0] + "'. Valid: ADD, REMOVE, DISPLAY, EARLY, STOP.");
             };
         } catch (IncorrectActionException e) {
             System.out.println("[Client " + clientId + "] IncorrectActionException: " + e.getMessage());
@@ -72,8 +70,8 @@ public class ClientHandler implements Runnable {
         if (parts.length < 5)
             throw new IncorrectActionException("ADD requires: ADD|DATE|TIME|ROOM|MODULE");
         LocalDate date = LocalDate.parse(parts[1].trim());
-        String time   = parts[2].trim();
-        String room   = parts[3].trim();
+        String time = parts[2].trim();
+        String room = parts[3].trim();
         String module = parts[4].trim();
         String capErr = schedule.checkModuleCap(module);
         if (capErr != null) return "ERROR|" + capErr;
@@ -87,14 +85,11 @@ public class ClientHandler implements Runnable {
         if (parts.length < 3)
             throw new IncorrectActionException("REMOVE requires: REMOVE|DATE|TIME");
         LocalDate date = LocalDate.parse(parts[1].trim());
-        String time    = parts[2].trim();
+        String time = parts[2].trim();
         Lecture removed = schedule.removeLecture(date, time);
         if (removed == null)
             return "ERROR|No lecture found at " + date + " " + time + ".";
-        return "OK|Removed: " + removed.getModule()
-                + " on " + date + " at " + time
-                + " in room " + removed.getRoom()
-                + ". Slot " + time + " on " + date + " is now free.";
+        return "OK|Removed: " + removed.getModule() + " on " + date + " at " + time + " in room " + removed.getRoom() + ". Slot " + time + " on " + date + " is now free.";
     }
 
     private String handleDisplay() {
