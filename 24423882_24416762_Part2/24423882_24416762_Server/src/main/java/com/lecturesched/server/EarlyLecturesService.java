@@ -11,8 +11,7 @@ import java.util.concurrent.ForkJoinPool;
 
 public class EarlyLecturesService extends Task<String> {
 
-    private static final List<String> MORNING_SLOTS = List.of(
-            "09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00");
+    private static final List<String> MORNING_SLOTS = List.of("09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00");
 
     private final Schedule schedule;
 
