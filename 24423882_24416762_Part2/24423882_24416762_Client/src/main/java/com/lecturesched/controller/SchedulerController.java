@@ -67,11 +67,11 @@ public class SchedulerController {
             view.showInfo("Not connected", "No connection to server. Press Clear to reconnect.");
             return;
         }
-        String action  = view.getActionBox().getValue();
+        String action = view.getActionBox().getValue();
         LocalDate date = view.getDatePicker().getValue();
-        String time    = view.getTimeBox().getValue();
-        String room    = view.getRoomField().getText().trim();
-        String module  = view.getModuleField().getText().trim();
+        String time = view.getTimeBox().getValue();
+        String room = view.getRoomField().getText().trim();
+        String module = view.getModuleField().getText().trim();
         String request = buildRequest(action, date, time, room, module);
         if (request == null) return;
         view.log("CLIENT> " + request);
@@ -118,9 +118,9 @@ public class SchedulerController {
                 }
                 yield "REMOVE|" + d + "|" + time + "||";
             }
-            case "DISPLAY"        -> "DISPLAY||||";
+            case "DISPLAY" -> "DISPLAY||||";
             case "EARLY LECTURES" -> "EARLY||||";
-            default               -> "OTHER||||";
+            default -> "OTHER||||";
         };
     }
 
@@ -185,8 +185,7 @@ public class SchedulerController {
                 if (fields.length == 4) {
                     try {
                         lectures.add(new Lecture(
-                                LocalDate.parse(fields[0].trim()),
-                                fields[1].trim(), fields[2].trim(), fields[3].trim()));
+                                LocalDate.parse(fields[0].trim()), fields[1].trim(), fields[2].trim(), fields[3].trim()));
                     } catch (Exception ignored) {}
                 }
             }
