@@ -56,6 +56,7 @@ public class ClientHandler implements Runnable {
                 case "REMOVE" -> handleRemove(parts);
                 case "DISPLAY" -> handleDisplay();
                 case "EARLY" -> handleEarlyLectures();
+                case "EXPORT" -> handleExport();
                 default -> throw new IncorrectActionException("Unknown action '" + parts[0] + "'. Valid: ADD, REMOVE, DISPLAY, EARLY, STOP.");
             };
         } catch (IncorrectActionException e) {
@@ -96,7 +97,10 @@ public class ClientHandler implements Runnable {
         String data = schedule.getScheduleAsString();
         return data.isEmpty() ? "OK|SCHEDULE:EMPTY" : "OK|SCHEDULE:" + data;
     }
-
+    private String handleExport() {
+        String data = schedule.getScheduleAsString();
+        return data.isEmpty() ? "OK|EXPORT:EMPTY" : "OK|EXPORT" + data;
+    }
     private String handleEarlyLectures() {
         EarlyLecturesService task = new EarlyLecturesService(schedule);
         Thread worker = new Thread(task, "EarlyLecturesWorker-client" + clientId);
