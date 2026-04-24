@@ -8,6 +8,9 @@ import java.net.Socket;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
+import java.io.FileWriter;
+import javafx.stage.FileChooser;
 
 import com.lecturesched.model.Lecture;
 import com.lecturesched.view.SchedulerView;
@@ -120,6 +123,7 @@ public class SchedulerController {
             }
             case "DISPLAY" -> "DISPLAY||||";
             case "EARLY LECTURES" -> "EARLY||||";
+            case "EXPORT CSV" -> "EXPORT||||";
             default -> "OTHER||||";
         };
     }
@@ -163,6 +167,9 @@ public class SchedulerController {
                 if (scheduleData != null) {
                     parseAndDisplaySchedule(scheduleData);
                 }
+                } else if (payload.startsWith("EXPORT")) {
+                    String exportData = payload.substring(6);
+                    handleExportToFile(exportData);
             } else {
                 view.setStatus(payload, StatusType.OK);
             }
@@ -192,4 +199,43 @@ public class SchedulerController {
         }
         view.refreshTimetable(lectures);
     }
+     private void handleExportToFile(String data) {
+            if (data.equals("EMPTY") || data.isBlank()) {
+                view.showInfo("Export", "No lectures to export.");
+                return;
+            }
+            StringBuilder csv = new StringBuilder();
+            csv.append("Date, Time, Room, Module\n");
+            for (String entry : data.split(";")) {
+                String[] fields = entry.split(",", -1);
+                if (fields.length == 4) {
+                    csv.append(fields[0].trim()).append(",")
+                            .append(fields[1].trim()).append(",")
+                            .append(fields[2].trim()).append(",")
+                            .append(fields[3].trim()).append("\n");
+                }
+            }
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Timetable as CSV");
+            fileChooser.setInitialFileName("LM051-2026-timetable.csv");
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("CSV Files","*.csv"));
+
+            File file = fileChooser.showSaveDialog(new Stage());
+            if (file == null) return;
+
+            if (!file.getName().endsWith(".csv")) {
+                file = new File(file.getAbsolutePath() + ".csv");
+            }
+
+            try (FileWriter writer = new FileWriter(file)) {
+                System.out.println("WRITING TO: " + file.getAbsolutePath());
+                writer.write(csv.toString());
+                view.setStatus("Exported to " + file.getName(), StatusType.OK);
+                view.showInfo("Export Successful", "Timetable saved to:\n" + file.getAbsolutePath());
+            } catch (IOException e) {
+                view.setStatus("Export failed", StatusType.ERROR);
+                view.showWarning("Export Failed", "Could not write file: " + e.getMessage());
+            }
+        }
 }
