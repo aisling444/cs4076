@@ -35,13 +35,9 @@ import javafx.stage.Stage;
 public class SchedulerView {
 
     private static final String[] DAYS = {"Mon", "Tue", "Wed", "Thu", "Fri"};
-    private static final String[] TIME_SLOTS = {
-        "09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00",
-        "14:00-15:00", "15:00-16:00", "16:00-17:00", "17:00-18:00"
-    };
-    private static final String[] MODULE_COLORS = {
-        "#3f51b5", "#e91e63", "#009688", "#ff5722", "#8bc34a"
-    };
+    private static final String[] TIME_SLOTS = {"09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00",
+        "14:00-15:00", "15:00-16:00", "16:00-17:00", "17:00-18:00"};
+    private static final String[] MODULE_COLORS = {"#3f51b5", "#e91e63", "#009688", "#ff5722", "#8bc34a"};
 
     private ComboBox<String> actionBox;
     private DatePicker datePicker;
@@ -81,8 +77,7 @@ public class SchedulerView {
     }
 
     private Node buildForm() {
-        actionBox = new ComboBox<>(FXCollections.observableArrayList(
-                "ADD", "REMOVE", "DISPLAY", "EARLY LECTURES", "OTHER"));
+        actionBox = new ComboBox<>(FXCollections.observableArrayList("ADD", "REMOVE", "DISPLAY", "EARLY LECTURES", "OTHER"));
         actionBox.getSelectionModel().selectFirst();
         actionBox.setMaxWidth(Double.MAX_VALUE);
 
@@ -116,11 +111,16 @@ public class SchedulerView {
         form.setHgap(10);
         form.setVgap(10);
         int row = 0;
-        form.add(boldLabel("Action:"),   0, row); form.add(actionBox,   1, row++);
-        form.add(boldLabel("Date:"),     0, row); form.add(datePicker,  1, row++);
-        form.add(boldLabel("Time Slot:"),0, row); form.add(timeBox,     1, row++);
-        form.add(boldLabel("Room:"),     0, row); form.add(roomField,   1, row++);
-        form.add(boldLabel("Module:"),   0, row); form.add(moduleField, 1, row++);
+        form.add(boldLabel("Action:"), 0, row); 
+        form.add(actionBox, 1, row++);
+        form.add(boldLabel("Date:"), 0, row); 
+        form.add(datePicker, 1, row++);
+        form.add(boldLabel("Time Slot:"), 0, row); 
+        form.add(timeBox, 1, row++);
+        form.add(boldLabel("Room:"), 0, row); 
+        form.add(roomField, 1, row++);
+        form.add(boldLabel("Module:"), 0, row); 
+        form.add(moduleField, 1, row++);
 
         VBox buttons = new VBox(8, sendBtn, stopBtn, clearBtn, statusLabel);
         buttons.setPadding(new Insets(14, 0, 0, 0));
@@ -136,7 +136,7 @@ public class SchedulerView {
     }
 
     private void updateFieldVisibility(String action) {
-        boolean isAdd    = "ADD".equals(action);
+        boolean isAdd = "ADD".equals(action);
         boolean isRemove = "REMOVE".equals(action);
         boolean needsDate = isAdd || isRemove;
         datePicker.setDisable(!needsDate);
@@ -173,8 +173,7 @@ public class SchedulerView {
             Label dayHeader = new Label(DAYS[d]);
             dayHeader.setMaxWidth(Double.MAX_VALUE);
             dayHeader.setAlignment(Pos.CENTER);
-            dayHeader.setStyle("-fx-font-weight:bold;-fx-font-size:12px;"
-                    + "-fx-background-color:#3f51b5;-fx-text-fill:white;-fx-padding:4;");
+            dayHeader.setStyle("-fx-font-weight:bold;-fx-font-size:12px;" + "-fx-background-color:#3f51b5;-fx-text-fill:white;-fx-padding:4;");
             timetableGrid.add(dayHeader, d + 1, 0);
         }
 
@@ -217,8 +216,7 @@ public class SchedulerView {
         logArea.setStyle("-fx-font-family:'Courier New',monospace;-fx-font-size:12px;");
         VBox bottom = new VBox(6, sectionLabel("Conversation Log"), logArea);
         bottom.setPadding(new Insets(10, 14, 10, 14));
-        bottom.setStyle("-fx-background-color:#fafafa;"
-                + "-fx-border-color:#cccccc;-fx-border-width:1 0 0 0;");
+        bottom.setStyle("-fx-background-color:#fafafa;" + "-fx-border-color:#cccccc;-fx-border-width:1 0 0 0;");
         return bottom;
     }
 
@@ -262,25 +260,25 @@ public class SchedulerView {
         return MODULE_COLORS[moduleColorMap.get(module)];
     }
 
-    public ComboBox<String> getActionBox()  { return actionBox; }
-    public DatePicker getDatePicker()       { return datePicker; }
-    public ComboBox<String> getTimeBox()    { return timeBox; }
-    public TextField getRoomField()         { return roomField; }
-    public TextField getModuleField()       { return moduleField; }
-    public Button getSendBtn()              { return sendBtn; }
-    public Button getStopBtn()              { return stopBtn; }
-    public Button getClearBtn()             { return clearBtn; }
+    public ComboBox<String> getActionBox() { return actionBox; }
+    public DatePicker getDatePicker() { return datePicker; }
+    public ComboBox<String> getTimeBox() { return timeBox; }
+    public TextField getRoomField() { return roomField; }
+    public TextField getModuleField() { return moduleField; }
+    public Button getSendBtn() { return sendBtn; }
+    public Button getStopBtn() { return stopBtn; }
+    public Button getClearBtn() { return clearBtn; }
 
-    public void log(String message)  { logArea.appendText(message + System.lineSeparator()); }
-    public void clearLog()           { logArea.clear(); }
+    public void log(String message) { logArea.appendText(message + System.lineSeparator()); }
+    public void clearLog() { logArea.clear(); }
 
     public void setStatus(String text, StatusType type) {
         statusLabel.setText("Status: " + text);
         switch (type) {
-            case OK         -> statusLabel.setStyle("-fx-text-fill:#2e7d32;-fx-font-style:italic;");
-            case ERROR      -> statusLabel.setStyle("-fx-text-fill:#c62828;-fx-font-style:italic;");
+            case OK -> statusLabel.setStyle("-fx-text-fill:#2e7d32;-fx-font-style:italic;");
+            case ERROR -> statusLabel.setStyle("-fx-text-fill:#c62828;-fx-font-style:italic;");
             case TERMINATED -> statusLabel.setStyle("-fx-text-fill:#6a1a4a;-fx-font-style:italic;");
-            default         -> statusLabel.setStyle("-fx-font-style:italic;");
+            default -> statusLabel.setStyle("-fx-font-style:italic;");
         }
     }
 
