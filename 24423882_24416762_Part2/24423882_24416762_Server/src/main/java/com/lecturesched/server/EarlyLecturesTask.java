@@ -9,8 +9,7 @@ import java.util.concurrent.RecursiveTask;
 
 public class EarlyLecturesTask extends RecursiveTask<List<Lecture>> {
 
-    private static final List<String> MORNING_SLOTS = List.of(
-            "09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00");
+    private static final List<String> MORNING_SLOTS = List.of("09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00");
 
     private final List<Lecture> snapshot;
     private final List<LocalDate> days;
@@ -26,11 +25,11 @@ public class EarlyLecturesTask extends RecursiveTask<List<Lecture>> {
             return shiftDay(days.get(0));
         }
         int mid = days.size() / 2;
-        EarlyLecturesTask leftTask  = new EarlyLecturesTask(snapshot, days.subList(0, mid));
+        EarlyLecturesTask leftTask = new EarlyLecturesTask(snapshot, days.subList(0, mid));
         EarlyLecturesTask rightTask = new EarlyLecturesTask(snapshot, days.subList(mid, days.size()));
         leftTask.fork();
         List<Lecture> rightResult = rightTask.compute();
-        List<Lecture> leftResult  = leftTask.join();
+        List<Lecture> leftResult = leftTask.join();
         List<Lecture> merged = new ArrayList<>(leftResult);
         merged.addAll(rightResult);
         return merged;
@@ -72,9 +71,7 @@ public class EarlyLecturesTask extends RecursiveTask<List<Lecture>> {
             }
         }
 
-        System.out.println("[EarlyLecturesTask] Day " + day
-                + " processed by thread " + Thread.currentThread().getName()
-                + " — " + shifted.size() + " lecture(s) shifted.");
+        System.out.println("[EarlyLecturesTask] Day " + day + " processed by thread " + Thread.currentThread().getName() + " — " + shifted.size() + " lecture(s) shifted.");
         return shifted;
     }
 }
