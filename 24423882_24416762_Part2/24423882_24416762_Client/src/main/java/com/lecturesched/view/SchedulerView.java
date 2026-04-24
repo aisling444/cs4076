@@ -77,7 +77,7 @@ public class SchedulerView {
     }
 
     private Node buildForm() {
-        actionBox = new ComboBox<>(FXCollections.observableArrayList("ADD", "REMOVE", "DISPLAY", "EARLY LECTURES", "OTHER"));
+        actionBox = new ComboBox<>(FXCollections.observableArrayList("ADD", "REMOVE", "DISPLAY", "EARLY LECTURES", "EXPOERT CSV", "OTHER"));
         actionBox.getSelectionModel().selectFirst();
         actionBox.setMaxWidth(Double.MAX_VALUE);
 
